@@ -8,22 +8,20 @@ import 'graphiql/graphiql.css'
  * @param variables
  * @returns {Promise<never>|Promise<Response | *>}
  */
-const gqlFetcher = ({query, variables = {}}) => {
-  if (!query || typeof query === 'undefined') return Promise.reject('No query.')
+const gqlFetcher = params => {
+  if (!params.query || typeof params.query === 'undefined') return Promise.reject('No query.')
 
   return fetch(`https://countries.trevorblades.com/`, {
-    method: 'POST',
+    method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      query,
-      variables,
-    })
+    body: JSON.stringify(params)
   })
     .then(response => response.json())
     .catch(response => response.text)
 }
+
 
 /**
  * Default query to fill form with.
